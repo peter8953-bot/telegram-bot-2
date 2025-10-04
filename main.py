@@ -89,10 +89,19 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(WELCOME_TEXT, disable_web_page_preview=True, reply_markup=MAIN_MENU)
 
-# === 관리자 명령 ===
+# === 관리자 명령: /reply <유저ID> <메시지> ===
 async def admin_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != ADMIN_ID:
         return await update.message.reply_text("관리자만 사용 가능합니다.")
     try:
         target_id = int(context.args[0])
-        reply_text =_
+        reply_text = " ".join(context.args[1:])  # ✅ 여기에서 오류 났던 부분 수정 완료
+        await context.bot.send_message(
+            chat_id=target_id,
+            text="👨‍💼 상담원: " + reply_text,
+            reply_markup=MAIN_MENU
+        )
+        await update.message.reply_text("✅ 고객에게 답변을 보냈습니다.")
+    except Exception as e:
+        await update.message.reply_text(f"사용법: /reply <유저ID> <메시지>\n에러: {e}")
+
