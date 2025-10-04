@@ -14,17 +14,18 @@ WELCOME_TEXT = """
 [김평범이 드리는 마지막 선물 안내]
 
 안녕하세요, 김평범 입니다.
-제가 드리는 마지막 편지와 선물은 잘 받아 보셨나요?
-추가 문의사항이 있으시면 "상담원 연결" 버튼을 눌러 편하게 말씀해주시고
-김평범에게 남기고 싶은 말씀이 있으시다면 "편지 남기기"에 남겨주시기 바랍니다. 
+VIPACCESS를 받고 싶으시면 아래 방법을 참고해주세요
+
+추가 문의사항이 있으시면 "상담원 연결" 버튼을 눌러 말씀해주시고
+김평범에게 남기고 싶은 말씀이 있으시다면 "편지 남기기"에 남겨주세요.
 
 ────────────────
 ✅ 마지막 편지 보러가기 
-https://www.notion.so/280ee3ec2d308025a75de2b65dde5414
+https://buly.kr/FWTlJiF
 
 ────────────────
-✅ 김평범의 마지막 선물 셀퍼럴 가입 방법
-https://www.notion.so/280ee3ec2d308058983aed4f111d31af
+✅ VIPACCESS 받는 방법
+https://buly.kr/7QMuCBn
 
 감사합니다.
 """
@@ -32,7 +33,7 @@ https://www.notion.so/280ee3ec2d308058983aed4f111d31af
 # === 버튼 메뉴 ===
 MAIN_MENU = ReplyKeyboardMarkup(
     [
-        [KeyboardButton("셀퍼럴 가입방법")],
+        [KeyboardButton("VIPACCESS 받는 방법")],
         [KeyboardButton("편지 남기기")],
         [KeyboardButton("상담원 연결")]
     ],
@@ -60,8 +61,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if uid not in user_state:
         user_state[uid] = {"username": uname, "mode": "auto"}
 
-    if text == "셀퍼럴 가입방법":
-        await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://www.notion.so/280ee3ec2d308058983aed4f111d31af")
+    if text == "VIPACCESS 받는 방법":
+        await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn")
         return
 
     if text == "편지 남기기":
