@@ -45,44 +45,44 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     uid = update.effective_user.id
     uname = update.effective_user.username or str(uid)
     user_state.setdefault(uid, {"username": uname, "mode": "auto"})
-    await update.message.reply_text(WELCOME_TEXT, disable_web_page_preview=True, reply_markup=MAIN_MENU)
-... 
-... # === /id ===
-... async def show_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
-...     uid = update.effective_user.id
-...     await update.message.reply_text(f"당신의 텔레그램 ID: {uid}")
-... 
-... # === 일반 메시지 처리 ===
-... async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-...     uid = update.effective_user.id
-...     text = (update.message.text or "").strip()
-...     uname = update.effective_user.username or str(uid)
-... 
-...     if uid not in user_state:
-...         user_state[uid] = {"username": uname, "mode": "auto"}
-... 
-...     if text == "셀퍼럴 가입방법":
-...         await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://www.notion.so/280ee3ec2d308058983aed4f111d31af")
-...         return
-... 
-...     if text == "편지 남기기":
-...         user_state[uid]["mode"] = "human"
-...         await update.message.reply_text("지금 여기에 편지를 남겨주세요!")
-...         await context.bot.send_message(
-...             chat_id=ADMIN_ID,
-...             text=f"📥 [편지] 고객 {uname}({uid})가 편지를 남겼습니다."
-...         )
-...         return
-... 
-...     if text == "상담원 연결":
-...         user_state[uid]["mode"] = "human"
-...         await update.message.reply_text("🙋 상담원을 연결해드리겠습니다. 잠시만 기다려주세요!")
-...         await context.bot.send_message(
-...             chat_id=ADMIN_ID,
-...             text=f"📥 [상담요청] 고객 {uname}({uid})가 상담원 연결을 요청했습니다."
-...         )
-...         return
-... 
+      await update.message.reply_text(WELCOME_TEXT, disable_web_page_preview=True, reply_markup=MAIN_MENU)
+
+# === /id ===
+async def show_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    uid = update.effective_user.id
+    await update.message.reply_text(f"당신의 텔레그램 ID: {uid}")
+
+# === 일반 메시지 처리 ===
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    uid = update.effective_user.id
+    text = (update.message.text or "").strip()
+    uname = update.effective_user.username or str(uid)
+
+    if uid not in user_state:
+        user_state[uid] = {"username": uname, "mode": "auto"}
+
+    if text == "셀퍼럴 가입방법":
+        await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://www.notion.so/280ee3ec2d308058983aed4f111d31af")
+        return
+
+    if text == "편지 남기기":
+        user_state[uid]["mode"] = "human"
+        await update.message.reply_text("지금 여기에 편지를 남겨주세요!")
+        await context.bot.send_message(
+            chat_id=ADMIN_ID,
+            text=f"📥 [편지] 고객 {uname}({uid})가 편지를 남겼습니다."
+        )
+        return
+
+    if text == "상담원 연결":
+        user_state[uid]["mode"] = "human"
+        await update.message.reply_text("🙋 상담원을 연결해드리겠습니다. 잠시만 기다려주세요!")
+        await context.bot.send_message(
+            chat_id=ADMIN_ID,
+            text=f"📥 [상담요청] 고객 {uname}({uid})가 상담원 연결을 요청했습니다."
+        )
+        return
+ 
     if user_state[uid]["mode"] == "human" and uid != ADMIN_ID:
         await context.bot.send_message(chat_id=ADMIN_ID, text=f"[고객 {uname}({uid})]\n{text}")
         await update.message.reply_text("📨 메시지를 전달했습니다.")
