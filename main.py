@@ -59,10 +59,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if uid not in user_state:
         user_state[uid] = {"username": uname, "mode": "auto"}
 
+    # 버튼 1: VIPACCESS
     if text == "VIPACCESS 받는 방법":
         await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn")
         return
 
+    # 버튼 2: 상담원 연결
     if text == "상담원 연결":
         user_state[uid]["mode"] = "human"
         await update.message.reply_text("🙋 상담원을 연결해드리겠습니다. 잠시만 기다려주세요!")
@@ -72,11 +74,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+    # 상담원 모드일 때 → 고객 메시지를 관리자에게 전달
     if user_state[uid]["mode"] == "human" and uid != ADMIN_ID:
         await context.bot.send_message(chat_id=ADMIN_ID, text=f"[고객 {uname}({uid})]\n{text}")
         await update.message.reply_text("📨 메시지를 전달했습니다.")
         return
 
+    # 기본 응답
     await update.message.reply_text(WELCOME_TEXT, disable_web_page_preview=True, reply_markup=MAIN_MENU)
 
 # === 관리자 명령 ===
