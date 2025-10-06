@@ -93,7 +93,7 @@ async def admin_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=target_id, text="👨‍💼 상담원: " + reply_text, reply_markup=MAIN_MENU)
         await update.message.reply_text("✅ 고객에게 답변을 보냈습니다.")
     except Exception as e:
-        await update.message.reply_text(f"사용법: /re <유저ID> <메시지>\n에러: {e}")
+        await update.message.reply_text(f"사용법: /reply <유저ID> <메시지>\n에러: {e}")
 
 async def admin_done(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != ADMIN_ID:
