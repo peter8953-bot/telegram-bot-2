@@ -61,7 +61,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # 버튼 1: VIPACCESS
     if text == "VIPACCESS 받는 방법":
-        await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn")
+        await update.message.reply_text("👉 아래 링크의 내용을 확인하시고 등록절차를 그대로 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn")
         return
 
     # 버튼 2: 상담원 연결
