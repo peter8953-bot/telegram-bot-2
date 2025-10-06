@@ -16,8 +16,7 @@ WELCOME_TEXT = """
 안녕하세요, 김평범 입니다.
 VIPACCESS를 받고 싶으시면 아래 "VIPACCESS 받는 방법"을 누르고 그대로 따라해주세요
 
-추가 문의사항이 있으시거나 이미 OKX 계정이 있으시다면 "상담원 연결" 버튼을 눌러 말씀해주시고
-김평범에게 남기고 싶은 말씀이 있으시다면 "편지 남기기"에 남겨주세요.
+추가 문의사항이 있으시거나 이미 OKX 계정이 있으시다면 "상담원 연결" 버튼을 누르고 말씀해주세요!
 
 ────────────────
 ✅ 김평범이 드리는 마지막 편지 보러가기 
@@ -34,7 +33,6 @@ https://buly.kr/7QMuCBn
 MAIN_MENU = ReplyKeyboardMarkup(
     [
         [KeyboardButton("VIPACCESS 받는 방법")],
-        [KeyboardButton("편지 남기기")],
         [KeyboardButton("상담원 연결")]
     ],
     resize_keyboard=True
@@ -63,15 +61,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if text == "VIPACCESS 받는 방법":
         await update.message.reply_text("👉 아래 링크를 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn")
-        return
-
-    if text == "편지 남기기":
-        user_state[uid]["mode"] = "human"
-        await update.message.reply_text("지금 여기에 편지를 남겨주세요!")
-        await context.bot.send_message(
-            chat_id=ADMIN_ID,
-            text=f"📥 [편지] 고객 {uname}({uid})가 편지를 남겼습니다."
-        )
         return
 
     if text == "상담원 연결":
