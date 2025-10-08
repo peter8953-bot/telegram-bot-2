@@ -3,7 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 # === 환경변수 ===
-BOT_TOKEN = os.environ["8202889233:AAESSQZDBwxHiNZcsQr8F2pO14ZSIEKfYO0"]     # Render Environment에 BOT_TOKEN 등록 필수
+BOT_TOKEN = os.environ["BOT_TOKEN""]     # Render Environment에 BOT_TOKEN 등록 필수
 # 여러 관리자 아이디 (쉼표로 구분하여 입력 가능)
 ADMIN_IDS = [1007406034, 7111088595]    # 관리자 2명 (정수형 ID로)
 
