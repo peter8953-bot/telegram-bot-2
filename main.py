@@ -9,6 +9,7 @@ ADMIN_ID = int(os.environ.get("ADMIN_ID", "0"))  # 관리자 ID 하나만 사용
 # === 유저 상태 저장 ===
 user_state = {}
 
+# === 웰컴메세지 ===
 WELCOME_TEXT = """
 [김평범이 드리는 마지막 선물 안내]
 
@@ -28,6 +29,7 @@ https://buly.kr/7QMuCBn
 감사합니다.
 """
 
+# === 버튼 메뉴 ===
 MAIN_MENU = ReplyKeyboardMarkup(
     [
         [KeyboardButton("VIPACCESS 받는 방법")],
@@ -59,5 +61,31 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # 버튼 1: VIPACCESS
     if text == "VIPACCESS 받는 방법":
-        await update.message.reply_text("👉_
+        await update.message.reply_text(
+            "👉 아래 링크의 내용을 확인하시고 등록 절차를 따라하시면 됩니다:\nhttps://buly.kr/7QMuCBn"
+        )
+        return
 
+    # 버튼 2: 상담원 연결 (링크 안내)
+    if text == "상담원 연결":
+        await update.message.reply_text(
+            "👉 상담원 연결은 아래 링크로 연락 주세요:\nhttps://t.me/Managertroy"
+        )
+        return
+
+    # 기본 응답
+    await update.message.reply_text(WELCOME_TEXT, disable_web_page_preview=True, reply_markup=MAIN_MENU)
+
+# === 메인 실행 ===
+def main():
+    app = Application.builder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("id", show_id))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+    print("🤖 봇 실행 중...")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
