@@ -2,22 +2,21 @@ import os
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
-# === 환경변수 불러오기 + 디버깅 로그 ===
+# === 환경변수 불러오기 ===
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "0").split(",") if x.strip().isdigit()]
 
-print("🔑 BOT_TOKEN:", BOT_TOKEN)   # BOT_TOKEN 확인
-print("👮 ADMIN_IDS:", ADMIN_IDS)   # ADMIN_IDS 확인
+print("🔑 BOT_TOKEN:", BOT_TOKEN[:10] + "..." if BOT_TOKEN else "❌ 없음")
+print("👮 ADMIN_IDS:", ADMIN_IDS)
 
 if not BOT_TOKEN:
-    print("❌ BOT_TOKEN이 없습니다! Render 환경변수를 확인하세요.")
+    print("❌ BOT_TOKEN이 없습니다. Render 환경변수를 확인하세요.")
 if not ADMIN_IDS:
-    print("⚠️ ADMIN_IDS가 비어있습니다. 관리자 ID를 확인하세요.")
+    print("⚠️ ADMIN_IDS가 비어있습니다.")
 
 # === 유저 상태 저장 ===
 user_state = {}
 
-# === 웰컴메세지 ===
 WELCOME_TEXT = """
 [김평범이 드리는 마지막 선물 안내]
 
@@ -37,7 +36,6 @@ https://buly.kr/7QMuCBn
 감사합니다.
 """
 
-# === 버튼 메뉴 ===
 MAIN_MENU = ReplyKeyboardMarkup(
     [
         [KeyboardButton("VIPACCESS 받는 방법")],
@@ -99,7 +97,7 @@ def main():
     app.add_handler(CommandHandler("id", show_id))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    print("🤖 봇 실행 시작 (Polling 중)...")
+    print("🤖 봇 실행 시작 (Polling)...")
     app.run_polling()
 
 if __name__ == "__main__":
